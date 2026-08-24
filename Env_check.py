@@ -3,6 +3,7 @@ import shutil
 import subprocess
 import sys
 from pathlib import Path
+from functools import lru_cache
 
 CONFIG_DIR = Path.home() / '.vid-download'
 MARKER_FILE = CONFIG_DIR / 'setup_complete.json'
@@ -17,14 +18,8 @@ _DENO_INSTALL_CMD = {
     'MAC/LIN': 'curl -fsSL https://deno.land/install.sh | sh',
 }
 
-
 def ensure_env_ready() -> None:
-    """Ensures Deno and ffmpeg are both available before entering the CLI app.
-
-    Tracks each tool's status independently in the marker file, so a partial
-    setup (e.g. ffmpeg reinstalled/removed later) doesn't force a redundant
-    Deno check, and vice versa.
-    """
+    """Ensures Deno and ffmpeg are both available before entering the CLI app."""
     status = _load_status()
 
     if not status.get('deno'):
@@ -73,10 +68,6 @@ def _ensure_deno() -> None:
 
     _sanity_check(['deno', '--version'], "Deno", allow_path_miss=True)
 
-
-# ---------------------------------------------------------------------------
-# ffmpeg
-# ---------------------------------------------------------------------------
 
 def _ensure_ffmpeg() -> None:
     if shutil.which('ffmpeg'):

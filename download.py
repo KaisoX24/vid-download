@@ -1,7 +1,9 @@
 import time
 from pathlib import Path
 import yt_dlp
-
+import yt_dlp.utils as ytdlpError
+from errors.check_errors import classify_download_errors
+from errors.errors import DownloadFailure
 
 def progress_hook(d, progress_callback=None, status_callback=None, state=None):
     "Handles yt-dlp progress updates safely, throttled to avoid UI spam."
@@ -39,7 +41,7 @@ def progress_hook(d, progress_callback=None, status_callback=None, state=None):
 
 def download_video(
     url,
-    selected_res="Best",
+    selected_res="best",
     audio_quality="192k",
     file_type="mp4",
     output_path="downloads",
@@ -47,14 +49,14 @@ def download_video(
     status_callback=None,
 ):
     "Downloads a single URL as mp4 or mp3 via yt-dlp"
-    
+
     Path(output_path).mkdir(parents=True, exist_ok=True)
 
     format_map = {
-        "Best": "bestvideo+bestaudio/best",
-        "480P": "bestvideo[height<=480]+bestaudio/best",
-        "720P": "bestvideo[height<=720]+bestaudio/best",
-        "1080P": "bestvideo[height<=1080]+bestaudio/best",
+        "best": "bestvideo+bestaudio/best",
+        "480p": "bestvideo[height<=480]+bestaudio/best",
+        "720p": "bestvideo[height<=720]+bestaudio/best",
+        "1080p": "bestvideo[height<=1080]+bestaudio/best",
     }
 
     audio_map = {
@@ -116,8 +118,11 @@ def download_video(
     if status_callback:
         status_callback("Starting download...")
 
-    with yt_dlp.YoutubeDL(ydl_opts) as ydl:
-        ydl.download([url])
+    try:
+        with yt_dlp.YoutubeDL(ydl_opts) as ydl:
+            ydl.download([url])
+    except ytdlpError.DownloadError as e:
+        raise DownloadFailure(classify_download_errors(e),str(e)) from e
 
     if progress_callback:
         progress_callback(1.0)

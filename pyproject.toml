@@ -1,6 +1,6 @@
 [project]
 name = "vid-download"
-version = "0.1.0"
+version = "0.1.1"
 description = "Add your description here"
 authors = [
     { name = "KaisoX24", email = "acharjyapramit@gmail.com" }
@@ -13,7 +13,7 @@ dependencies = [
 ]
 
 [project.scripts]
-vid-download = "vid_download:main"
+vid-download = "vid_download:main:app"
 
 [build-system]
 requires = ["uv_build>=0.12.5,<0.13.0"]
