@@ -4,13 +4,13 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "vid-download"
-version = "0.2.0"
+version = "0.2.2"
 description = "Download video/audio from the terminal via yt-dlp, with parallel batch downloads and progress bars."
 readme = "README.md"
-requires-python = ">=3.9"
+requires-python = ">=3.10"
 license = { text = "MIT" }
 authors = [
-    { name = "Your Name", email = "you@example.com" }
+    { name = "Pramit Acharjya", email = "acharjyapramit@gmail.com" }
 ]
 
 keywords = ["youtube", "download", "yt-dlp", "cli", "video", "audio"]
@@ -25,7 +25,7 @@ classifiers = [
 dependencies = [
     "dotenv>=0.9.9",
     "typer>=0.27.1",
-    "yt-dlp>=2026.8.19",
+    "yt-dlp[default]>=2026.8.19",
 ]
 
 [project.urls]
