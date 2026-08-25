@@ -1,20 +1,39 @@
+[build-system]
+requires = ["setuptools>=68.0"]
+build-backend = "setuptools.build_meta"
+
 [project]
 name = "vid-download"
-version = "0.1.1"
-description = "Add your description here"
+version = "0.2.0"
+description = "Download video/audio from the terminal via yt-dlp, with parallel batch downloads and progress bars."
+readme = "README.md"
+requires-python = ">=3.9"
+license = { text = "MIT" }
 authors = [
-    { name = "KaisoX24", email = "acharjyapramit@gmail.com" }
+    { name = "Your Name", email = "you@example.com" }
 ]
-requires-python = ">=3.13"
+
+keywords = ["youtube", "download", "yt-dlp", "cli", "video", "audio"]
+
+classifiers = [
+    "Environment :: Console",
+    "Intended Audience :: End Users/Desktop",
+    "Programming Language :: Python :: 3",
+    "Topic :: Multimedia :: Video",
+]
+
 dependencies = [
     "dotenv>=0.9.9",
     "typer>=0.27.1",
     "yt-dlp>=2026.8.19",
 ]
 
-[project.scripts]
-vid-download = "vid_download:main:app"
+[project.urls]
+Homepage = "https://pypi.org/project/vid-download/"
+Repository = "https://github.com/KaisoX24/vid-download"
 
-[build-system]
-requires = ["uv_build>=0.12.5,<0.13.0"]
-build-backend = "uv_build"
+[project.scripts]
+vid-download = "vid_download.cli:app"
+
+[tool.setuptools.packages.find]
+include = ["vid_download*"]
