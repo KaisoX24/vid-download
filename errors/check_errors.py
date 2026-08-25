@@ -13,7 +13,7 @@ def classify_download_errors(exc:Exception) -> FetchError:
     if exc_info and len(exc_info)>1 and exc_info[1] is not None:
         candidates.append(exc_info[1])
 
-    for candidate in candidate:
+    for candidate in candidates:
         if isinstance(candidate,ytdlpError):
             return _STATUS_MAP.get(candidate.status,FetchError.UNKNOWN)
 
