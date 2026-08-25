@@ -1,5 +1,4 @@
 import shutil
-import time
 from pathlib import Path
 from concurrent.futures import ThreadPoolExecutor,as_completed
 from typing import List,Optional,Required
@@ -69,7 +68,7 @@ def main(
     is_batch=len(urls)>1
     batch_folder=None
     if is_batch:
-        appdata=Path.home()/'vidownload'
+        appdata=Path.home()/'.vid-download'
         appdata.mkdir(exist_ok=True,parents=True)
         batch_folder=appdata/f'batch_{uuid4().hex[:8]}'
         batch_folder.mkdir(exist_ok=True,parents=True)
@@ -95,9 +94,7 @@ def main(
     _print_summary(results)
     if any(not r.success for r in results):
         raise typer.Exit(code=1)
-
-
-
+    
 def _ask_count() -> int:
     "Asks the user for the amount of files to be downloaded"
     while True:
