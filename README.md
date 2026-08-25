@@ -5,7 +5,13 @@ Download video and audio from the terminal, powered by [yt-dlp](https://github.c
 ## Installation
 
 ```
-pip install vid-download
+pip install vid-download (module)
+git clone https://github.com/KaisoX24/vid-download.git
+```
+
+```
+cd vid-download
+uv sync
 ```
 
 On first run, the tool checks for two required external tools — Deno (needed to solve some sites' JS challenges) and ffmpeg (needed for format conversion/merging) — and offers to install whichever is missing automatically.
